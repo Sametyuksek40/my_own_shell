@@ -1,0 +1,14 @@
+# Derleme Çıktıları (İkili dosyalar ve nesne kodları)
+*.exe
+*.out
+*.o
+*.obj
+my_own_shell
+
+# VS Code ve IDE Ayarları
+.vscode/
+.DS_Store
+
+# Geçici dosyalar
+*.log
+*.tmp
