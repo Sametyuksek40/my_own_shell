@@ -29,7 +29,7 @@ std::vector<std::string>CommandParser::parse(const std::string&input){
 
       //! 1.ters eğik çizgiden kaçış
 
-      if (c=='//')
+      if (c=='\\')
       {
           //tek tırnak içerisindeysek ters eğik çizginin hiçbir özel anlamı yok
           if (in_single_quote)
@@ -41,7 +41,7 @@ std::vector<std::string>CommandParser::parse(const std::string&input){
 
          else if (in_double_quote)
           {
-              if (i+1<length&&input[i+1]=='"'||input[i+1]=='//')
+              if (i+1<length&&input[i+1]=='"'||input[i+1]=='\\')
               {
                   //Bu durumda bir sonraki karakteri doğrudan al
                   current_token+=c;
