@@ -7,6 +7,9 @@
 #include<fstream>
 
 
+#include"CommandParser.h"
+
+
 using namespace::std;
 
 //modülleri include edererek herkese ilgili işi veriyoruz
@@ -17,31 +20,53 @@ int main(){
 cout<<unitbuf;
 cerr<<unitbuf;
 
-string command;
+string input_line;
 
 while (true)
 {
 
-   cout<<"$ "<<endl;
-   if (!getline(cin,command))
+   cout<<"$ ";
+   if (!getline(cin,input_line))
    {
      break;
    }
-   if (command=="exit")
-   {
-     break;
-   }
-   if (!command.empty())
-   {
+
+//? 1.adım Kullanıcının komutunu işlemesi için parsera yolluyoruz
+
+vector<string>tokens=CommandParser::parse(input_line);
+
+//? Eğer kullanıcı hiçbirsey yazmadan ENTER ladıysa döngünün başına dön
+
+if (tokens.empty())
+{
      
-    cout<<command<<" command is nout found"<<endl;
-
-   }
-   
-   
-
+     continue;
 }
 
+//! Listenin ilk elemanı herzaman ana komuttur
+
+string command=tokens[0];
+   
+
+//Şimdilik test amaçlı exit çıkış modu
+
+if (command=="exit")
+{
+     break;
+}
+
+// DEBUG / TEST MODU: 
+        // Ayrıştırıcımızın girdiyi nasıl kelimelere böldüğünü net görebilmek için ekrana basalım
+        std::cout << "[DEBUG] Ayristirilan Kelime Sayisi: " << tokens.size() << "\n";
+        for (size_t i = 0; i < tokens.size(); ++i) {
+            std::cout << "  -> Kelime [" << i << "]: " << tokens[i] << "\n";
+        }
+
+        // Şimdilik geçici bir uyarı basıyoruz (İleride burası Builtins ve SystemUtils'e bağlanacak)
+        std::cout << command << ": command not found (Builtins ve PATH sistemleri henüz eklenmedi)\n";
+
+
+}
 
 
 
