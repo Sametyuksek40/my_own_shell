@@ -5,7 +5,7 @@
 #include<filesystem>
 #include<cstdlib>
 #include<fstream>
-
+#include "Builtins.h"
 
 #include"CommandParser.h"
 
@@ -31,6 +31,11 @@ while (true)
      break;
    }
 
+   // DÜZELTME: Temizliği PARÇALAMADAN ÖNCE yapıyoruz!
+    if (!input_line.empty() && input_line.back() == '\r') {
+        input_line.pop_back();
+    }
+
 //? 1.adım Kullanıcının komutunu işlemesi için parsera yolluyoruz
 
 vector<string>tokens=CommandParser::parse(input_line);
@@ -46,28 +51,16 @@ if (tokens.empty())
 //! Listenin ilk elemanı herzaman ana komuttur
 
 string command=tokens[0];
-   
-
-//Şimdilik test amaçlı exit çıkış modu
-
-if (command=="exit")
+ 
+if (Builtins::execute(tokens))
 {
-     break;
+  continue;
 }
 
-// DEBUG / TEST MODU: 
-        // Ayrıştırıcımızın girdiyi nasıl kelimelere böldüğünü net görebilmek için ekrana basalım
-        std::cout << "[DEBUG] Ayristirilan Kelime Sayisi: " << tokens.size() << "\n";
-        for (size_t i = 0; i < tokens.size(); ++i) {
-            std::cout << "  -> Kelime [" << i << "]: " << tokens[i] << "\n";
-        }
-
-        // Şimdilik geçici bir uyarı basıyoruz (İleride burası Builtins ve SystemUtils'e bağlanacak)
-        std::cout << command << ": command not found (Builtins ve PATH sistemleri henüz eklenmedi)\n";
+cout<<command<<" : command not found "<<endl;
 
 
 }
-
 
 
 
